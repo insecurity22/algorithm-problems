@@ -8,7 +8,7 @@
  */
 
 const fileSystem = require('fs');
-const input = fileSystem.readFileSync('./input.txt').toString().trim().split('\n');
+const input = fileSystem.readFileSync(0).toString().trim().split('\n');
 
 // 테스트 케이스 개수
 const T = Number(input[0]);

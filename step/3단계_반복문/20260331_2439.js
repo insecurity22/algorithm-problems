@@ -5,7 +5,7 @@
 const fileSystem = require('fs');
 
 // 별 개수
-const N = Number(fileSystem.readFileSync('./input.txt').toString().trim());
+const N = Number(fileSystem.readFileSync(0).toString().trim());
 
 // N이 5라고 가정했을 때
 // 공백 4, 별 1

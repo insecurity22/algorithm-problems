@@ -4,7 +4,7 @@
  */
 
 const fileSystem = require('fs');
-const input = fileSystem.readFileSync('./input.txt').toString().trim().split('\n');
+const input = fileSystem.readFileSync(0).toString().trim().split('\n');
 
 // 과목 개수 N, 시험 성적
 const N = Number(input[0]);

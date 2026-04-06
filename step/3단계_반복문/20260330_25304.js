@@ -8,7 +8,7 @@
  */
 
 const fileSystem = require('fs');
-const input = fileSystem.readFileSync('./input.txt').toString().trim().split('\n');
+const input = fileSystem.readFileSync(0).toString().trim().split('\n');
 
 // 영수증에 적힌 총 금액 X
 const X = Number(input[0]);

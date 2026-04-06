@@ -8,7 +8,7 @@
  */
 
 const fileSystem = require('fs');
-const input = fileSystem.readFileSync('./input.txt').toString().trim().split('\n');
+const input = fileSystem.readFileSync(0).toString().trim().split('\n');
 
 const resultArr = [];
 for(let i = 0; i < input.length; i++) {

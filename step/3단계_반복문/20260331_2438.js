@@ -3,7 +3,7 @@
  */
 
 const fileSystem = require('fs');
-const N = Number(fileSystem.readFileSync('./input.txt').toString().trim());
+const N = Number(fileSystem.readFileSync(0).toString().trim());
 
 const starArr = [];
 for(let i = 1; i <= N; i++) {

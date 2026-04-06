@@ -11,7 +11,7 @@
  */
 
 const fileSystem = require('fs');
-const input = fileSystem.readFileSync('./index.txt').toString().split('\n');
+const input = fileSystem.readFileSync(0).toString().split('\n');
 
 const x = Number(input[0]);
 const y = Number(input[1]);
