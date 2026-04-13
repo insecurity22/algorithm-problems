@@ -32,3 +32,21 @@ for (let i = 1; i <= n; i++) {
 const result = Array.from(set).sort().reverse();
 console.log(result.join("\n"));
 ```
+
+## 3) 나는야 포켓몬 마스터 이다솜 (`1620번`)
+
+- `Array`에 이름만 저장하고 순차 탐색으로 찾으면 한 번에 `O(N)`이 걸리며, 이를 `M`번 반복하면 최악의 경우에는 `O(N × M)`되어 `N, M = 100,000`일 때 약 `10¹⁰`으로 시간 초과가 발생합니다. 배열은 `arr[i]`처럼 인덱스로 접근할 때는 `O(1)`이지만, indexOf 등올 특정 값을 찾으면 `O(N)`의 선형 탐색이 필요합니다.
+- 반면 `Map`은 **해시 기반 키 조회**로 동작하여 `poketmonMap.get(name)`을 통해 값을 시간복잡도 `O(1)`에 즉시 조회할 수 있어 빠르고 대량 데이터 처리에 적합합니다. 다만 `Map`은 기본적으로 값 → 키 역조회를 지원하지 않으며, `get(key)`을 통한 키 → 값 조회만 가능합니다.
+- 이 문제는 **이름 → 번호, 번호 → 이름**의 양방향 조회가 필요하므로, 이름 → 번호는 `Map`, 번호 → 이름은 `Array`로 나누어 처리한다. 두 구조를 함께 사용하면 모든 연산을 O(1)로 수행할 수 있어 전체 시간복잡도를 `O(N + M)`으로 줄일 수 있습니다.
+  - **이름 → 번호**: `Map`에 `(name -> index)` 저장 → `pokemonMap.get(name)` (O(1))
+  - **번호 → 이름**: `Array`을 1부터 채움 → `pokemonList[num]` (O(1))
+
+```js
+const pokemonList = new Array(N + 1);
+const pokemonMap = new Map();
+for (let i = 1; i <= N; i++) {
+  const name = input[i];
+  pokemonList[i] = name;
+  pokemonMap.set(name, i);
+}
+```
