@@ -50,3 +50,25 @@ for (let i = 1; i <= N; i++) {
   pokemonMap.set(name, i);
 }
 ```
+
+## 4) 대칭 차집합 (`1269번`)
+
+- delete를 사용해도 시간복잡도는 같지만,해시 테이블 수정이 반복되며 내부적으로 재조정과 메모리 변경이 발생해 단순 조회보다 실제 연산 비용이 더 큽니다.
+
+```js
+for (const x of aSet) {
+  if (bSet.has(x)) aSet.delete(x);
+}
+for (const x of bSet) {
+  if (aSet.has(x)) bSet.delete(x);
+}
+console.log(aSet.size + bSet.size);
+```
+
+```js
+let commonCount = 0;
+for (const x of aSet) {
+  if (bSet.has(x)) commonCount++;
+}
+console.log(aSet.size + bSet.size - commonCount * 2);
+```
