@@ -130,3 +130,28 @@ function solution(s) {
   return (s.length === 4 || s.length === 6) && /^\d+$/.test(s);
 }
 ```
+
+## 8. 이상한 문자 만들기 ⭐ (`20260422_131705.js`)
+
+- 첫 번째 풀이(`split` 후 재조합)도 동작하긴하지만, 단어마다 공백을 다시 붙이고 마지막 공백을 잘라내야 해서 복잡한 부분이 있었습니다.
+- 아래 대안처럼 문자열을 한 번만 순회하면서, 공백을 만나면 인덱스를 `0`으로 초기화하는 방식이 더 직관적이고 실수 여지도 적습니다.
+
+```js
+function solution(s) {
+  let answer = "";
+  let idx = 0;
+
+  for (let i = 0; i < s.length; i++) {
+    const str = s[i];
+    if (str === " ") {
+      answer += " ";
+      idx = 0;
+    } else {
+      answer += idx % 2 === 0 ? str.toUpperCase() : str.toLowerCase();
+      idx++;
+    }
+  }
+
+  return answer;
+}
+```
