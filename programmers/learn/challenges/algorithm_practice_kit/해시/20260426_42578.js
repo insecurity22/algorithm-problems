@@ -12,6 +12,7 @@ function solution(clothes) { // [[의상의 이름, 의상의 종류], ...]
     
     return combinations - 1;
 }
+console.log(solution([["yellow_hat", "headgear"], ["blue_sunglasses", "eyewear"], ["green_turban", "headgear"]]));
 
 // 1. 안 입는 옷을 포함하기 위해 count + 1을 한다.
 // headgear(2개): yellow_hat, green_turban + X = 선택지 3개
