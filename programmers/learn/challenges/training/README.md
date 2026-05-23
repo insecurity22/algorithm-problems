@@ -30,3 +30,69 @@ function solution(a, b) {
   return (BigInt(a) + BigInt(b)).toString();
 }
 ```
+
+## 3. 홀짝 구분 합 (`20260523_181887.js`)
+
+- 배열은 0번 인덱스부터 시작하므로, 홀짝은 **인덱스가 아닌 순서(몇 번째)** 기준으로 판단해야 한다.
+  - 짝수 인덱스 → 홀수 번째 값
+  - 홀수 인덱스 → 짝수 번째 값
+  - 예: 0번 인덱스 → 1번째(홀수 번째), 1번 인덱스 → 2번째(짝수 번째)
+- 채택한 풀이는 `position = i + 1`로 순서를 계산한 뒤, 홀수·짝수 번째 합을 각각 누적하고 `Math.max`로 더 큰 값을 반환한다.
+  - `position` 계산 → 홀수 번째 확인 → `odd`/`even` 누적 흐름이 자연스럽게 읽히며, 로그 출력·조건 추가·디버깅 등 수정과 유지보수가 편하다.
+
+### 채택 풀이
+
+```js
+function solution(num_list) {
+  let odd = 0;
+  let even = 0;
+  for (let i = 0; i < num_list.length; i++) {
+    const position = i + 1;
+    if (position % 2) odd += num_list[i];
+    else even += num_list[i];
+  }
+  return Math.max(odd, even);
+}
+```
+
+### 다른 풀이 비교 (개인적 의견)
+
+**방법 1 — `reduce` + 구조 분해 + spread**
+
+- 구조 분해, 삼항 연산자, 배열 변환, spread 문법이 한 줄에 모여 한눈에 이해하기 어렵고 가독성이 떨어지며, `reduce`는 중간 상태를 추적하기 어렵다.
+
+```js
+return Math.max(
+  ...num_list.reduce(
+    ([odd, even], curr, i) => (i % 2 ? [odd + curr, even] : [odd, even + curr]),
+    [0, 0],
+  ),
+);
+```
+
+**방법 2 — `forEach`**
+
+- 결과 배열을 만들지 않으므로 `map`보다 `forEach`가 더 적절해보인다.
+- `odd > even ? odd : even`보다 `Math.max`가 "둘 중 큰 값 반환"이라는 의도가 메서드 이름만으로 드러나 가독성이 좋아보인다.
+
+```js
+let odd = 0,
+  even = 0;
+num_list.forEach((num, index) => (!(index % 2) ? (even += num) : (odd += num)));
+return Math.max(odd, even);
+```
+
+**방법 3 — `filter` + `reduce`**
+
+- 합산 로직을 함수로 분리해 의도는 잘 보이고 재사용 구조처럼 느껴진다.
+- 하지만 `filter`가 새 배열을 만들고 `reduce`까지 이어져 순회가 여러 번 발생한다. 또한 단순한 문제에 비해 구조가 과하고, 읽을 때 흐름 추적이 더 필요하다.
+
+```js
+const sum = (condition) =>
+  num_list
+    .filter((_, index) => condition(index))
+    .reduce((acc, cur) => acc + cur, 0);
+const oddSum = sum((index) => index % 2 === 0);
+const evenSum = sum((index) => index % 2 === 1);
+return oddSum < evenSum ? evenSum : oddSum;
+```
